@@ -131,13 +131,34 @@ if errorlevel 1 (
     exit /b 1
 )
 
+:: 6. Opcion de crear acceso directo en el Escritorio
+echo.
+echo ============================================================
+echo   ACCESO DIRECTO EN EL ESCRITORIO
+echo ============================================================
+echo.
+set /p "CREAR_ACCESO=Deseas crear un acceso directo en tu Escritorio? (s/n): "
+if /i "%CREAR_ACCESO%"=="s" goto :crear_acceso_directo
+goto :fin_instalacion
+
+:crear_acceso_directo
+echo [*] Creando acceso directo 'descarga YT' con su icono personalizado...
+powershell -NoProfile -Command "& { $ws = New-Object -ComObject WScript.Shell; $desk = [Environment]::GetFolderPath('Desktop'); $s = $ws.CreateShortcut((Join-Path $desk 'descarga YT.lnk')); $s.TargetPath = '%~dp0iniciar.bat'; $s.WorkingDirectory = '%~dp0'; if (Test-Path '%~dp0img\icono.ico') { $s.IconLocation = '%~dp0img\icono.ico'; } $s.Save(); }"
+if %errorlevel% equ 0 (
+    echo [+] Acceso directo 'descarga YT' creado exitosamente en tu Escritorio.
+) else (
+    echo [!] No se pudo crear el acceso directo de forma automatica.
+)
+
+:fin_instalacion
 echo.
 echo ============================================================
 echo         [+] INSTALACION FINALIZADA CON EXITO
 echo ============================================================
 echo.
-echo Ya puedes usar el programa haciendo doble clic en:
-echo    iniciar.bat
+echo Ya puedes usar el programa:
+echo    - Desde el acceso directo 'descarga YT' en tu Escritorio (si lo creaste)
+echo    - O haciendo doble clic en 'iniciar.bat'
 echo.
 pause
 exit /b 0

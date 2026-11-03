@@ -1,4 +1,8 @@
-# 📥 Descargador de YouTube Personalizado (MP4 / MP3)
+<p align="center">
+  <img src="img/banner.png" alt="Descarga YT Banner" width="100%">
+</p>
+
+#  Descargador de YouTube Personalizado (MP4 / MP3)
 
 Herramienta ligera, interactiva y de código abierto en Python para descargar videos de YouTube en formato **MP4** o extraer su audio en **MP3 / M4A**, con selección de calidad, estimación de peso y gestión de carpetas de descarga personalizadas.
 
@@ -16,6 +20,7 @@ Herramienta ligera, interactiva y de código abierto en Python para descargar vi
   - Recuerda automáticamente la última carpeta configurada (`config.json`).
   - Permite volver a la carpeta por defecto en cualquier momento con un clic.
 -  **FFmpeg integrado automáticamente:** Gracias a `static-ffmpeg`, no necesitas descargar ni configurar manualmente herramientas externas en tu sistema.
+-  **Acceso directo en el Escritorio:** Posibilidad de crear un acceso directo con nombre e ícono personalizado (`img/icono.ico`) durante la instalación.
 
 ---
 
@@ -27,7 +32,10 @@ Herramienta ligera, interactiva y de código abierto en Python para descargar vi
 2. Haz doble clic en el archivo **`instalar.bat`**.
    - *¿No tienes Python instalado?* El instalador lo detectará y te preguntará si deseas instalarlo de forma automática y segura a nivel de usuario (sin permisos de administrador).
    - Creará el entorno virtual (`venv`) e instalará las dependencias necesarias.
-3. ¡Listo! Para usar la aplicación en cualquier momento, solo haz doble clic en **`iniciar.bat`**.
+   - Te preguntará si deseas crear un **acceso directo en el Escritorio** llamado **`descarga YT`** con su ícono personalizado.
+3. ¡Listo! Para usar la aplicación en cualquier momento, solo haz doble clic en:
+   - El acceso directo **`descarga YT`** de tu Escritorio, o
+   - El archivo **`iniciar.bat`**.
 
 ---
 
@@ -75,7 +83,7 @@ python main.py
 
 ##  Uso de la Aplicación
 
-Al abrir la aplicación (mediante `iniciar.bat` o `python main.py`), verás el menú principal:
+Al abrir la aplicación (mediante el acceso directo, `iniciar.bat` o `python main.py`), verás el menú principal:
 
 ```text
 ============================================================
@@ -102,10 +110,13 @@ Menú principal:
 ##  Estructura del Proyecto
 
 ```text
+├── img/
+│   ├── banner.png       # Banner ilustrativo para la documentación
+│   └── icono.ico        # Ícono oficial para el acceso directo
 ├── main.py              # Script principal con la lógica y menús
 ├── requirements.txt     # Dependencias necesarias (yt-dlp, static-ffmpeg)
 ├── iniciar.bat          # Lanzador rápido de un clic
-├── instalar.bat         # Instalador automático no invasivo
+├── instalar.bat         # Instalador automático con opción de acceso directo
 ├── .gitignore           # Exclusiones automáticas para Git
 └── README.md            # Documentación del proyecto
 ```
@@ -117,4 +128,3 @@ Menú principal:
 > - `config.json`: Archivo local que recuerda tu última carpeta de guardado.
 >
 > Ninguno de estos tres elementos debe subirse a GitHub ni compartirse con otras personas, ya que el archivo `.gitignore` los excluye por defecto.
-
