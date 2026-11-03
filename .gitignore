@@ -1,0 +1,23 @@
+# Entornos virtuales
+venv/
+env/
+.venv/
+
+# Cache de Python
+__pycache__/
+*.py[cod]
+
+# Carpeta de descargas personales
+Descargas/
+descargas/
+
+# Archivos de configuración local
+config.json
+
+# Archivos multimedia temporales
+*.mp4
+*.mp3
+*.m4a
+*.webm
+*.part
+
