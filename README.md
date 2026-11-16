@@ -2,129 +2,114 @@
   <img src="img/banner.png" alt="Descarga YT Banner" width="100%">
 </p>
 
-#  Descargador de YouTube Personalizado (MP4 / MP3)
+# Descargador YT Studio (GUI en Flet • MP4 / MP3)
 
-Herramienta ligera, interactiva y de código abierto en Python para descargar videos de YouTube en formato **MP4** o extraer su audio en **MP3 / M4A**, con selección de calidad, estimación de peso y gestión de carpetas de descarga personalizadas.
-
----
-
-##  Características
-
--  **Video completo (Video + Audio):** Descarga en máxima calidad (1080p, 720p, etc.) combinando el video y audio en un archivo `.mp4` estándar.
--  **Solo video (Sin audio):** Descarga únicamente la pista visual en formato `.mp4`.
--  **Solo audio:** Extrae y convierte el audio a **MP3** (320, 256, 192, 128 o 64 kbps) o descarga el **M4A / AAC original** sin reconversión.
--  **Detección real de calidades:** Muestra todas las resoluciones disponibles del video junto a sus fotogramas por segundo (`fps`) y tamaño aproximado en MB/GB.
--  **Gestión de carpetas flexible:**
-  - Guarda por defecto en la carpeta `Descargas` dentro del proyecto.
-  - Permite configurar una **carpeta personalizada** pegando la ruta o seleccionándola con una ventana del explorador de Windows.
-  - Recuerda automáticamente la última carpeta configurada (`config.json`).
-  - Permite volver a la carpeta por defecto en cualquier momento con un clic.
--  **FFmpeg integrado automáticamente:** Gracias a `static-ffmpeg`, no necesitas descargar ni configurar manualmente herramientas externas en tu sistema.
--  **Acceso directo en el Escritorio:** Posibilidad de crear un acceso directo con nombre e ícono personalizado (`img/icono.ico`) durante la instalación.
+Aplicación de escritorio moderna para Windows desarrollada en **Python** con **Flet**, impulsada por `yt-dlp` y **FFmpeg integrado**. Permite analizar enlaces de YouTube, previsualizar miniatura y metadatos, estimar el peso exacto antes de descargar y guardar videos o audio en máxima calidad desde una interfaz oscura minimalista con acentos rosados en gradiente.
 
 ---
 
-##  Método 1: Instalación Automática (1 Clic)
+## Características
 
-> **Recomendado para usuarios sin experiencia con terminales o Python.**
-
-1. **Descarga o descomprime** este proyecto en tu computadora.
-2. Haz doble clic en el archivo **`instalar.bat`**.
-   - *¿No tienes Python instalado?* El instalador lo detectará y te preguntará si deseas instalarlo de forma automática y segura a nivel de usuario (sin permisos de administrador).
-   - Creará el entorno virtual (`venv`) e instalará las dependencias necesarias.
-   - Te preguntará si deseas crear un **acceso directo en el Escritorio** llamado **`descarga YT`** con su ícono personalizado.
-3. ¡Listo! Para usar la aplicación en cualquier momento, solo haz doble clic en:
-   - El acceso directo **`descarga YT`** de tu Escritorio, o
-   - El archivo **`iniciar.bat`**.
+- **Interfaz gráfica moderna (Flet Desktop):** Diseño en modo oscuro con tarjetas flotantes, bordes redondeados, degradados rosados y un indicador de estado luminoso en la barra superior.
+- **Análisis rápido sin bloquear la ventana:** Ejecuta la extracción de metadatos en segundo plano (`threading`) y muestra una tarjeta de previsualización con:
+  - Miniatura en alta calidad y badge de duración (`mm:ss` / `hh:mm:ss`).
+  - Título del video, nombre del canal y resolución máxima detectada.
+- **Pegado inteligente:** Botón **Pegar** que lee el portapapeles e inicia el análisis automáticamente si detecta un enlace de YouTube.
+- **Tres modos de descarga:**
+  - **Video + Audio (`MP4` combinado):** Descarga video y audio en la mejor compatibilidad/calidad disponible (4K, 2K, 1080p, 720p, etc.) y los une automáticamente.
+  - **Solo Audio:** Extrae y convierte el audio a **MP3** (320, 256, 192, 128 o 64 kbps) o descarga el **M4A / AAC original** nativo sin reconversión.
+  - **Solo Video (`MP4` sin audio):** Descarga únicamente la pista visual en la resolución elegida.
+- **Peso estimado y calidades reales:** Muestra todas las resoluciones disponibles (`fps` y etiqueta HD/Full HD/2K/4K) junto al peso aproximado exacto antes de iniciar la descarga.
+- **Progreso en tiempo real y cancelación segura:** Barra de progreso con gradiente que muestra porcentaje, velocidad de descarga (`MB/s` / `KB/s`), tiempo restante estimado (`ETA`), progreso acumulado en MB, botón **Cancelar** para abortar descargas en curso limpiando automáticamente archivos temporales (`.part` / `.ytdl`) y acceso directo para abrir el archivo al finalizar.
+- **Actualizador integrado de `yt-dlp`:** Botón en la barra superior para verificar e instalar en un clic la versión más reciente del motor `yt-dlp` tanto en modo código fuente como en el instalador `.exe`.
+- **Nombres de archivo compatibles con Windows:** Saneamiento automático de caracteres especiales y longitud máxima de ruta (`windowsfilenames` y `trim_file_name`).
+- **Gestión de carpetas flexible (`config.json`):**
+  - Guarda por defecto en la carpeta `Descargas` dentro de la aplicación.
+  - Permite cambiar la carpeta mediante el explorador nativo de Windows, restablecerla a la predeterminada o abrirla directamente en un clic.
+- **100% Autónomo (FFmpeg integrado):** Tanto en el instalador `.exe` como desde el código fuente (`static-ffmpeg`), no necesitas descargar ni configurar herramientas externas.
 
 ---
 
-##  Método 2: Instalación Manual (Desarrolladores)
+## Método 1: Instalador Directo de Windows (`Setup.exe` - Releases)
 
-Si prefieres configurar el entorno por tu cuenta desde la terminal:
+> **La forma más rápida y sencilla. No requiere tener Python ni FFmpeg instalados.**
+
+1. Ve a la sección de [**Releases**](../../releases) de este repositorio en GitHub.
+2. Descarga el archivo **`DescargadorYT_Setup.exe`**.
+3. Ejecuta el instalador, marca la casilla **"Crear un icono en el escritorio"** y finaliza el asistente.
+4. ¡Listo! Abre la aplicación desde el acceso directo **`Descargador YT`** en tu Escritorio o desde el Menú Inicio de Windows.
+
+---
+
+## Método 2: Instalación Automática desde el Código Fuente (`instalar.bat`)
+
+Si descargaste o clonaste el repositorio con el código fuente:
+
+1. Haz doble clic en el archivo **`instalar.bat`**.
+   - *¿No tienes Python instalado?* El script lo detectará y te ofrecerá instalarlo automáticamente a nivel de usuario.
+   - Creará el entorno virtual (`venv`) e instalará las dependencias necesarias (`yt-dlp`, `static-ffmpeg` y `flet[desktop]`).
+   - Te preguntará si deseas crear un acceso directo en el Escritorio con su ícono personalizado.
+2. Para abrir la aplicación en cualquier momento, haz doble clic en el acceso directo o en **`iniciar.bat`**.
+
+---
+
+## Método 3: Instalación Manual y Compilación (Desarrolladores)
 
 ### Requisitos previos
 - **Python 3.10** o superior instalado en el sistema.
 - Terminal (PowerShell o CMD).
 
-### Paso 1: Clonar o situarse en la carpeta del proyecto
-```bash
-cd "ruta/a/descargar yt"
-```
-
-### Paso 2: Crear el entorno virtual
-```bash
+### Ejecutar en modo desarrollo
+```powershell
+# 1. Crear el entorno virtual
 python -m venv venv
-```
 
-### Paso 3: Activar el entorno virtual
-- **En Windows (PowerShell):**
-  ```powershell
-  .\venv\Scripts\Activate.ps1
-  ```
-  *(Si PowerShell bloquea la ejecución de scripts, ejecuta antes: `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`)*
+# 2. Activar el entorno virtual (PowerShell)
+.\venv\Scripts\Activate.ps1
 
-- **En Windows (CMD):**
-  ```cmd
-  venv\Scripts\activate.bat
-  ```
-
-### Paso 4: Instalar las dependencias
-```bash
+# 3. Instalar las dependencias
 pip install -r requirements.txt
-```
 
-### Paso 5: Ejecutar la aplicación
-```bash
+# 4. Ejecutar la aplicación
 python main.py
 ```
 
----
-
-##  Uso de la Aplicación
-
-Al abrir la aplicación (mediante el acceso directo, `iniciar.bat` o `python main.py`), verás el menú principal:
-
-```text
-============================================================
-          DESCARGADOR DE YOUTUBE PERSONALIZADO
-============================================================
- Carpeta actual de guardado:
-   C:\TuRuta\descargar yt\Descargas
-============================================================
-
-Menú principal:
- [1] Descargar video
- [2] Carpeta personalizada
- [3] Reiniciar carpeta (carpeta por defecto)
- [4] Salir
-```
-
-1. **Descargar video:** Pega el enlace de YouTube y sigue las instrucciones en pantalla para elegir qué pista descargar y en qué calidad.
-2. **Carpeta personalizada:** Escribe/pega la ruta donde quieras guardar tus descargas, o presiona `v` para seleccionarla cómodamente con el explorador de archivos.
-3. **Reiniciar carpeta:** Vuelve a fijar la carpeta `Descargas` del proyecto.
-4. **Salir:** Cierra la aplicación y libera toda la memoria consumida.
+### Generar un nuevo instalador `DescargadorYT_Setup.exe` para GitHub Releases
+El proyecto incluye automatización completa con **Flet Pack (PyInstaller)** e **Inno Setup 6**:
+- Haz doble clic en **`empaquetar.bat`**
+- El script compilará la aplicación junto con los binarios de FFmpeg e íconos, y generará el instalador final listo para distribuir en:
+  ```text
+  release/DescargadorYT_Setup.exe
+  ```
 
 ---
 
-##  Estructura del Proyecto
+## Uso de la Aplicación
+
+Al abrir **Descargador YT Studio**:
+
+1. **Carpeta de destino:** En la barra superior puedes ver la ruta activa donde se guardarán tus archivos, junto a los botones **Cambiar**, **Restablecer** (`Descargas/`) y **Abrir carpeta**.
+2. **Enlace y análisis:** Pega la URL de YouTube manualmente o usa el botón **Pegar** y haz clic en **Analizar** (o presiona `Enter`).
+3. **Previsualización y configuración:** Revisa la tarjeta del video detectado, elige el modo (**Video + Audio**, **Solo Audio** o **Solo Video**) y selecciona la calidad deseada en el menú desplegable verificando el **Peso estimado**.
+4. **Descargar y seguir el progreso:** Haz clic en **Descargar ahora**. Podrás monitorear el avance en tiempo real (porcentaje, velocidad y MB descargados). Al concluir, el indicador superior derecho cambiará a verde (*Descarga completada*) y aparecerá el botón **Abrir archivo**.
+
+---
+
+## Estructura del Proyecto
 
 ```text
 ├── img/
 │   ├── banner.png       # Banner ilustrativo para la documentación
-│   └── icono.ico        # Ícono oficial para el acceso directo
-├── main.py              # Script principal con la lógica y menús
-├── requirements.txt     # Dependencias necesarias (yt-dlp, static-ffmpeg)
-├── iniciar.bat          # Lanzador rápido de un clic
-├── instalar.bat         # Instalador automático con opción de acceso directo
-├── .gitignore           # Exclusiones automáticas para Git
+│   └── icono.ico        # Ícono oficial para la ventana, el ejecutable y el instalador
+├── main.py              # Aplicación GUI en Flet, lógica de análisis y descarga con yt-dlp
+├── requirements.txt     # Dependencias necesarias (yt-dlp, static-ffmpeg, flet[desktop])
+├── iniciar.bat          # Lanzador rápido desde entorno virtual
+├── instalar.bat         # Instalador automático del entorno virtual y acceso directo
+├── empaquetar.bat       # Compilador de 1 clic para generar el Setup.exe de Releases
+├── setup.iss            # Configuración del instalador de Windows (Inno Setup)
+├── .gitignore           # Exclusiones automáticas para Git (venv, build, dist, release, etc.)
 └── README.md            # Documentación del proyecto
 ```
 
 > [!NOTE]
-> Al ejecutar el programa se crearán automáticamente:
-> - `venv/`: Entorno virtual local con las librerías.
-> - `Descargas/`: Carpeta donde se guardan los videos/audios.
-> - `config.json`: Archivo local que recuerda tu última carpeta de guardado.
->
-> Ninguno de estos tres elementos debe subirse a GitHub ni compartirse con otras personas, ya que el archivo `.gitignore` los excluye por defecto.
+> Las carpetas generadas localmente (`venv/`, `Descargas/`, `build/`, `dist/`, `release/` y `config.json`) están excluidas en `.gitignore` para mantener el repositorio limpio. El archivo `release/DescargadorYT_Setup.exe` debe subirse como binario adjunto en la pestaña **Releases** de GitHub.

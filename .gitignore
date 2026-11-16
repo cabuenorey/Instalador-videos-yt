@@ -21,3 +21,11 @@ config.json
 *.webm
 *.part
 
+# Compilación y empaquetado (PyInstaller / Inno Setup)
+build/
+dist/
+release/
+*.spec
+*.exe
+
+
